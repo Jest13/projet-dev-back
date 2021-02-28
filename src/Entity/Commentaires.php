@@ -47,6 +47,12 @@ class Commentaires
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Articles::class, inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $articles;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +126,18 @@ class Commentaires
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getArticles(): ?Articles
+    {
+        return $this->articles;
+    }
+
+    public function setArticles(?Articles $articles): self
+    {
+        $this->articles = $articles;
 
         return $this;
     }
