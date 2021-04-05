@@ -6,6 +6,7 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
@@ -25,7 +26,8 @@ class Categories
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     *@Gedmo\Slug(fields={"nom"})
+     * @ORM\Column(length=128)
      */
     private $label;
 
@@ -59,13 +61,6 @@ class Categories
     public function getLabel(): ?string
     {
         return $this->label;
-    }
-
-    public function setLabel(string $label): self
-    {
-        $this->label = $label;
-
-        return $this;
     }
 
     /**

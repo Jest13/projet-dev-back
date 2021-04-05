@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\ArticlesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM; 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
@@ -25,7 +27,8 @@ class Articles
     private $titre;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     *  @Gedmo\Slug(fields={"titre", "id"})
+     *  @ORM\Column(length=128, unique=true)
      */
     private $label;
 
@@ -35,11 +38,17 @@ class Articles
     private $text;
 
     /**
+     * @var \DateTime $ created_at 
+     * 
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $created_at;
 
     /**
+     * @var \DateTime $updated_at
+     * 
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
@@ -99,12 +108,6 @@ class Articles
         return $this->label;
     }
 
-    public function setLabel(string $label): self
-    {
-        $this->label = $label;
-
-        return $this;
-    }
 
     public function getText(): ?string
     {
@@ -123,24 +126,12 @@ class Articles
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
 
     public function getFeaturedImage(): ?string
     {
