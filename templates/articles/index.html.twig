@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <p>future liste des articles<p>
+    {% for article in articles %}
+    <h1>{{ article.titre }}</h1>
+    <p>Publié le {{ article.createdAt|date('d/m/Y à h\\hi') }}</p>
+    <div>{{article.contenu|raw}}</div>
+    <p>
+    
+    {% for categorie in article.categories %}
+
+    {{ categorie.nom }}
+
+    {% endfor %}
+
+    <p>
+    {% endfor %}
+{% endblock %}

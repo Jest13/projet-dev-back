@@ -12,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
- * @ORM\Entity(repositoryClass=ArticlesRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ArticlesRepository")
  * @Vich\Uploadable
  */
 class Articles
@@ -21,7 +21,6 @@ class Articles
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * 
      */
     private $id;
 

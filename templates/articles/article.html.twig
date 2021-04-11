@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+    <h1>{{ article.titre }}</h1>
+    <div>{{ article.contenu|raw }}</div>
+
+    <p>Catégories : 
+        {% for categorie in article.categories %}
+            {{ categorie.nom }} 
+        {% endfor %}
+    </p>
+
+
+{% endblock %}
