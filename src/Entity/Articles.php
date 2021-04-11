@@ -7,10 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM; 
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
+ * @Vich\Uploadable
  */
 class Articles
 {
@@ -18,6 +21,7 @@ class Articles
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
@@ -33,9 +37,9 @@ class Articles
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
-    private $text;
+    private $contenu;
 
     /**
      * @var \DateTime $ created_at 
@@ -55,8 +59,15 @@ class Articles
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string 
      */
     private $featured_image;
+
+    /**
+     * @Vich\UploadableField(mapping="featured_images", fileNameProperty="featured_image")
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="articles")
@@ -109,14 +120,14 @@ class Articles
     }
 
 
-    public function getText(): ?string
+    public function getContenu(): ?string
     {
-        return $this->text;
+        return $this->contenu;
     }
 
-    public function setText(string $text): self
+    public function setContenu(string $contenu): self
     {
-        $this->text = $text;
+        $this->contenu = $contenu;
 
         return $this;
     }
@@ -133,16 +144,30 @@ class Articles
     }
 
 
-    public function getFeaturedImage(): ?string
+    public function getFeaturedImage()
     {
         return $this->featured_image;
     }
 
-    public function setFeaturedImage(string $featured_image): self
+    public function setFeaturedImage($featured_image)
     {
         $this->featured_image = $featured_image;
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image){
+            $this->updated_at = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     public function getUsers(): ?Users
