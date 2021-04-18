@@ -7,21 +7,26 @@
 <div class="alert alert-success" role="alert">
   {{ message }}
 </div>
+
 {% endfor %}
-    <p>future liste des articles<p>
+<br>
     {% for article in articles %}
-    <h1><a href="{{ path('article', {"label": article.label}) }}">{{ article.titre }}</a></h1>
-    <p>Publié le {{ article.createdAt|date('d/m/Y à h\\hi') }}</p>
-    <div>{{article.contenu|raw}}</div>
-    <p>
-    
-    {% for categorie in article.categories %}
 
-    {{ categorie.nom }}
+  <div class="card" style="width: 17rem; display: inline-block">
 
-    {% endfor %}
+        <img class="card-img-top"style="width: 270px; height: 200px;" src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="{{ article.titre }}">
+        <div class="card-body">
+        <a href="{{ path('article', {"label": article.label}) }}" class="btn btn-primary">{{ article.titre }} </a>
+        <p>Publié le {{ article.createdAt|date('d/m/Y à h\\hi') }}</p>
+        {% for categorie in article.categories %}
+        {{ categorie.nom }}
+        {% endfor %}
+  
+    </div>
+  </div>
 
-    </p>
 
-    {% endfor %}
+
+{% endfor %}
+
 {% endblock %}
